@@ -168,6 +168,8 @@ def video_pose_detection(write_output=False, pnp_flag=cv2.SOLVEPNP_ITERATIVE, us
         object_points = np.array(object_points)
         image_points = np.array(image_points)
 
+        print(f"Object points: {object_points.shape}, Image points: {image_points.shape}")
+
         useExtrinsicGuess = prev_rvec is not None and prev_tvec is not None and use_extrinsic_guess
         
         try:
