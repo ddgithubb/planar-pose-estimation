@@ -1,9 +1,9 @@
-from pnp.pnp import PNP
+from src.pnp.pnp import PNP
 import cv2
 
 class IPPE(PNP):
-    def __init__(self, camera_config):
-        super().__init__(camera_config)
+    def __init__(self):
+        super().__init__()
 
-    def estimate_pose(self, object_points, image_points):
+    def estimate_pose(self, camera_matrix, object_points, image_points):
         raise NotImplementedError

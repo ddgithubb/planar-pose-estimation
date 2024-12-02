@@ -1,23 +1,6 @@
 import cv2
 import numpy as np
 
-def plane_points_from_image(feature_detector, img, camera_matrix):
-    keypoints, descriptors = feature_detector.detectAndCompute(img, None)
-    
-    # turn keypoints into a plane in 3D space using camera matrix
-    points = np.zeros((len(keypoints), 3))
-    for i, kp in enumerate(keypoints):
-        points[i] = np.array([kp.pt[0], kp.pt[1], 0])
-    
-    # use camera matrix to convert 2D points to 3D points
-
-    points = np.dot(np.linalg.inv(camera_matrix), points.T).T
-
-    # center the points
-    points = points - np.mean(points, axis=0)
-
-    return points, descriptors
-
 def plot_points_to_image(img, keypoints, projected_points, axis_points):
     if projected_points is not None:
         for point in projected_points:
