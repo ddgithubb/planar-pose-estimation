@@ -1,4 +1,4 @@
-from camera_config import CameraConfig
+from camera_config.camera_config import CameraConfig
 
 class Pixel7(CameraConfig):
     def __init__(self):

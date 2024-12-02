@@ -1,4 +1,4 @@
-from pnp import PNP
+from pnp.pnp import PNP
 import cv2
 
 class OpenCVPNP(PNP):
