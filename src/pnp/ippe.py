@@ -1,3 +1,4 @@
+from typing import Tuple
 from src.pnp.pnp import PNP
 import numpy as np
 import cv2
@@ -36,6 +37,10 @@ class IPPE(PNP):
         t = gamma * np.dot(np.linalg.inv(camera_matrix), h3)
 
         return True, rvec, t
+    
+    def estimate_pose_ransac(self, camera_matrix, object_points, image_points, max_iterations=100, reprojection_error=8.0):
+        success, rvec, tvec, _ = cv2.solvePnPRansac(object_points, image_points, camera_matrix, None, flags=cv2.SOLVEPNP_IPPE, iterationsCount=max_iterations, reprojectionError=reprojection_error)
+        return success, rvec, tvec
 
 # Example Usage
 # Assuming object_points and image_points are np.arrays with appropriate dimensions

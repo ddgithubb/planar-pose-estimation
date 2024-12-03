@@ -38,5 +38,3 @@ class PNP:
             rvec (3 x 1 np.ndarray): Rotation vector in Rodrigues form
             tvec (3 x 1 np.ndarray): Translation vector
         '''
-        # TODO IMPLEMENT
-        # TODO reprojection error is euclidean distance between projected points and image points

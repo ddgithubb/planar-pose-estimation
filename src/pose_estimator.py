@@ -1,6 +1,7 @@
 from src.camera_config.camera_config import CameraConfig
 from src.feature_matcher.feature_matcher import FeatureMatcher
 from src.pnp.pnp import PNP
+from src.analytics import Analytics
 from PIL import Image
 import numpy as np
 from typing import Tuple
@@ -23,7 +24,17 @@ class PoseEstimator:
         success, rvec, tvec = self.pnp.estimate_pose_ransac(object_points, image_points, max_iterations, reprojection_error)
         return success, rvec, tvec
     
-    def video_estimate_pose(self, base_image_path: str, video_path: str, use_ransac: bool = False, show_frame_pose: bool = True, write_output: bool = True, out_folder: str = 'out') -> None:
+    def video_estimate_pose(
+            self, 
+            base_image_path: str, 
+            video_path: str, 
+            use_ransac: bool = False,
+            verbose: bool = False,
+            show_frame_pose: bool = True, 
+            write_output: bool = True, 
+            out_folder: str = 'out',
+            analytics: Analytics = None
+            ) -> None:
         base_img = Image.open(base_image_path)
         height = base_img.size[0]
         width = base_img.size[1]
@@ -36,10 +47,18 @@ class PoseEstimator:
             video_name = video_path.split('/')[-1].split('.')[0]
             video_out = cv2.VideoWriter(f'{out_folder}/{video_name}_output.avi', cv2.VideoWriter_fourcc(*'MJPG'), 30.0, (frame.shape[1], frame.shape[0]))
 
+        if analytics is not None:
+            analytics.start()
+
         while True:
             ret, frame = video.read()
             if not ret:
                 break
+
+            if analytics is not None:
+                analytics.start_frame()
+                if verbose:
+                    print(f"\nFrame: {analytics.num_frames}")
 
             img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             img = Image.fromarray(img)
@@ -48,7 +67,13 @@ class PoseEstimator:
             width = img.size[1]
             camera_matrix = self.camera_config.calc_camera_matrix(height, width)
 
+            if analytics is not None:
+                analytics.start_feature_match()
+
             matched_keypoints1, matched_keypoints2 = self.feature_matcher.match(base_img, img)
+
+            if analytics is not None:
+                analytics.end_feature_match()
 
             object_points = np.hstack((matched_keypoints1, np.zeros((matched_keypoints1.shape[0], 1))))
 
@@ -63,16 +88,29 @@ class PoseEstimator:
             success = False
             rvec = None
             tvec = None
-            try:
-                if use_ransac:
-                    success, rvec, tvec = self.pnp.estimate_pose_ransac(camera_matrix, object_points, image_points)
-                else:
-                    success, rvec, tvec = self.pnp.estimate_pose(camera_matrix, object_points, image_points)
-            except Exception as e:
-                print("Exception:", e)
-                success = False
+            
+            if analytics is not None:
+                analytics.start_pnp()
 
-            print(f"Success: {success}, rvec: {rvec}, tvec: {tvec}")
+            if use_ransac:
+                success, rvec, tvec = self.pnp.estimate_pose_ransac(camera_matrix, object_points, image_points)
+            else:
+                success, rvec, tvec = self.pnp.estimate_pose(camera_matrix, object_points, image_points)
+
+            if analytics is not None:
+                analytics.end_pnp()
+
+            # try:
+            #     if use_ransac:
+            #         success, rvec, tvec = self.pnp.estimate_pose_ransac(camera_matrix, object_points, image_points)
+            #     else:
+            #         success, rvec, tvec = self.pnp.estimate_pose(camera_matrix, object_points, image_points)
+            # except Exception as e:
+            #     print("Exception:", e)
+            #     success = False
+
+            if verbose:
+                print(f"Success: {success}, rvec: {rvec}, tvec: {tvec}")
 
             img = frame
 
@@ -86,6 +124,13 @@ class PoseEstimator:
                     axis_points, _ = cv2.projectPoints(axis, rvec, tvec, camera_matrix, None)
                     projected_points, _ = cv2.projectPoints(object_points, rvec, tvec, camera_matrix, None)
 
+                    axis_points = axis_points.reshape(-1, 2)
+                    projected_points = projected_points.reshape(-1, 2)
+
+                    if analytics is not None:
+                        reprojection_error = np.mean(np.linalg.norm(image_points - projected_points, axis=1))
+                        analytics.add_reprojection_error(reprojection_error)
+
                     graphics.plot_points_to_image(img, image_points, projected_points, axis_points)
                     graphics.show_image(img)
 
@@ -94,6 +139,15 @@ class PoseEstimator:
 
             if cv2.waitKey(1) == 27:
                 break
+
+            if analytics is not None:
+                analytics.end_frame()
+
+                if verbose:
+                    analytics.print_results()
+
+        if analytics is not None:
+            analytics.end()
 
         video.release()
         if write_output:
