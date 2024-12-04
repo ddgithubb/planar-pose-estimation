@@ -1,4 +1,3 @@
-from typing import Tuple
 from src.pnp.pnp import PNP
 import numpy as np
 import cv2
