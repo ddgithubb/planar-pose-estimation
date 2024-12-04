@@ -76,7 +76,7 @@ class IPPE(PNP):
 
     def estimate_t(self,R, points_3d, points_2d):
         '''
-        The homography fitting that is not shown in paper but shown in their github as matlab code
+        The translation vector fitting that is not shown in paper but shown in their github as matlab code
         '''
         points_3d = np.pad(points_3d, ((0, 0), (0, 1)), mode='constant')
         num_points = points_3d.shape[0]
