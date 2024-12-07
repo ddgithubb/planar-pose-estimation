@@ -38,3 +38,24 @@ class PNP:
             rvec (3 x 1 np.ndarray): Rotation vector in Rodrigues form
             tvec (3 x 1 np.ndarray): Translation vector
         '''
+        raise NotImplementedError
+    
+
+    def refine(self, camera_matrix: np.ndarray, object_points: np.ndarray, image_points: np.ndarray, rvec: np.ndarray, tvec: np.ndarray) -> Tuple[bool, np.ndarray, np.ndarray]:
+        '''
+        Refine pose of object from object points and image points
+
+        Inputs:
+            camera_matrix (3 x 3 np.ndarray): Camera matrix
+            object_points (N x 3 np.ndarray): 3D points of object
+            image_points (N x 2 np.ndarray): 2D points of object in image
+            rvec (3 x 1 np.ndarray): Rotation vector in Rodrigues form
+            tvec (3 x 1 np.ndarray): Translation vector
+
+        Outputs:
+            success (bool): True if pose is refined successfully
+            rvec (3 x 1 np.ndarray): Refined rotation vector in Rodrigues form
+            tvec (3 x 1 np.ndarray): Refined translation vector
+        '''
+        rvec, tvec = cv2.solvePnPRefineLM(object_points, image_points, camera_matrix, None, rvec, tvec)
+        return True, rvec, tvec

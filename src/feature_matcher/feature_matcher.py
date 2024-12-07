@@ -15,6 +15,8 @@ class FeatureMatcher:
             img2 (Image.Image): Second image
         
         Outputs:
+            kpts1 (N x 2 np.ndarray): Keypoints in first image
+            kpts2 (N x 2 np.ndarray): Keypoints in second image
             matched_kpts1 (N x 2 np.ndarray): Matched keypoints in first image
             matched_kpts2 (N x 2 np.ndarray): Matched keypoints in second image
         '''

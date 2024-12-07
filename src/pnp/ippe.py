@@ -163,11 +163,13 @@ class IPPE(PNP):
             return True,R1, t1_adj
         else:
             return True,R2, t2_adj
+        
     def estimate_pose(self,camera_matrix,object_points,image_points):
         success,r,t = self.perspectiveIPPE(object_points,image_points,camera_matrix)
         rvec,_ = cv2.Rodrigues(r)
         tvec = t.reshape(-1,1)
         return success,rvec,tvec
+    
     def estimate_pose_ransac(self, camera_matrix, object_points, image_points, max_iterations=100,
                              reprojection_error=8.0):
         success, rvec, tvec, _ = cv2.solvePnPRansac(object_points, image_points, camera_matrix, None,

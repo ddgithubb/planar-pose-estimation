@@ -27,7 +27,7 @@ class ImageMatchingModels(FeatureMatcher):
 
     def match_tensor(self, img1: torch.Tensor, img2: torch.Tensor) -> Tuple[np.ndarray, np.ndarray]:
         result = self.matcher(img1, img2)
-        return result["matched_kpts0"], result["matched_kpts1"]
+        return result["all_kpts0"], result["all_kpts1"], result["matched_kpts0"], result["matched_kpts1"]
         
     def match(self, img1: Image.Image, img2: Image.Image) -> Tuple[np.ndarray, np.ndarray]:
         img1 = img1.convert("RGB")

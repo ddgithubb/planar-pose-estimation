@@ -8,24 +8,42 @@ import cv2
 
 camera_config = Pixel7()
 
+feature_matcher = ImageMatchingModels("sift-lg")
 # feature_matcher = ImageMatchingModels("sift-nn")
-# feature_matcher = ImageMatchingModels("sift-lg")
-feature_matcher = ImageMatchingModels("superpoint-lg")
 # feature_matcher = ImageMatchingModels("orb-nn")
+
+# feature_matcher = ImageMatchingModels("superpoint-lg")
 # feature_matcher = ImageMatchingModels("superglue")
+# feature_matcher = ImageMatchingModels("xfeat")
+# feature_matcher = ImageMatchingModels("aliked-subpx", "cpu")
+# feature_matcher = ImageMatchingModels("d2net")
 # feature_matcher = ImageMatchingModels("aliked-lg", "cpu")
-# feature_matcher = ImageMatchingModels("loftr")
 
 # pnp = OpenCVPNP(cv2.SOLVEPNP_ITERATIVE)
 # pnp = OpenCVPNP(cv2.SOLVEPNP_IPPE)
-# pnp = OpenCVPNP(cv2.SOLVEPNP_EPNP)
 pnp = IPPE()
 
 pose_estimator = PoseEstimator(camera_config, feature_matcher, pnp)
 
 analytics = Analytics()
 
-pose_estimator.video_estimate_pose("images/base_0.jpg", "videos/video_0.mp4", use_ransac=False, verbose=True, analytics=analytics)
+pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_test.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_test.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+
+# pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_test.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
+
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_ransac=True, use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_ransac=True, use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_refine=True, verbose=True, write_output=True, analytics=analytics)
 
 print("\nFinal Results:")
 analytics.print_results()
