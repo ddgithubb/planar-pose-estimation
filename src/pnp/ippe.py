@@ -5,7 +5,7 @@ import cv2
 
 class IPPE(PNP):
     def __init__(self):
-        super().__init__()
+        super().__init__("IPPE")
 
     def normalize_image_points(self,image_points, camera_matrix):
         """

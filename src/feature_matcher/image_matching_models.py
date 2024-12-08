@@ -22,6 +22,7 @@ print(f"Using default device: {default_device}")
 class ImageMatchingModels(FeatureMatcher):
     def __init__(self, matcher_name="sift-nn", device=default_device):
         super().__init__()
+        self.matcher_name = matcher_name
         self.matcher = get_matcher(matcher_name, device=device)
         self.device = device
 

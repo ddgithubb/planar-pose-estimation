@@ -4,8 +4,8 @@ from src.pnp.pnp import PNP
 import cv2
 
 class OpenCVPNP(PNP):
-    def __init__(self, pnp_flag=cv2.SOLVEPNP_ITERATIVE):
-        super().__init__()
+    def __init__(self, name, pnp_flag=cv2.SOLVEPNP_ITERATIVE):
+        super().__init__(name)
         self.pnp_flag = pnp_flag
 
     def estimate_pose(self, camera_matrix, object_points, image_points):

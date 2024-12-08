@@ -27,23 +27,21 @@ pose_estimator = PoseEstimator(camera_config, feature_matcher, pnp)
 
 analytics = Analytics()
 
-pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_far.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_far.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
 
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_test.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_test.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_close.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_close.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
 
 # pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
 # pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
 
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_test.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_close.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_far.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
 # pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_ransac=True, verbose=True, write_output=True, analytics=analytics)
 
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_ransac=True, use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
+# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_far.mp4", use_ransac=True, use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
 # pose_estimator.video_estimate_pose("images/base_guitar.png", "videos/video_guitar.mp4", use_ransac=True, use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
-
-# pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box.mp4", use_refine=True, verbose=True, write_output=True, analytics=analytics)
 
 print("\nFinal Results:")
 analytics.print_results()

@@ -47,7 +47,6 @@ class PoseEstimator:
             use_ransac: bool = False,
             ransac_max_iterations: int = 1000,
             use_lucas_kanade: bool = False,
-            use_refine: bool = False,
             verbose: bool = False,
             show_frame_pose: bool = False, 
             write_output: bool = False, 
@@ -142,9 +141,6 @@ class PoseEstimator:
                 else:
                     success, rvec, tvec = self.pnp.estimate_pose(camera_matrix, object_points, image_points)
 
-            if success and use_refine:
-                success, rvec, tvec = self.pnp.refine(camera_matrix, object_points, image_points, rvec, tvec)
-
             if analytics is not None:
                 analytics.end_pnp()
 
@@ -155,7 +151,8 @@ class PoseEstimator:
 
             # plot projected points on to image
             if not success:
-                print("Failed to solve PnP")
+                if verbose:
+                    print("Failed to solve PnP")
                 analytics.add_failed_frame()
             else:
                 if show_frame_pose:

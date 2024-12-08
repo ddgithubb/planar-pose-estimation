@@ -3,8 +3,8 @@ import numpy as np
 import cv2
 
 class PNP:
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
 
     def estimate_pose(self, camera_matrix: np.ndarray, object_points: np.ndarray, image_points: np.ndarray) -> Tuple[bool, np.ndarray, np.ndarray]:
         '''
