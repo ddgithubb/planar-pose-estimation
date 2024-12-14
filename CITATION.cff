@@ -1,0 +1,36 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Planar Pose Estimation with IPPE
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Daniel
+    family-names: Dai
+  - given-names: Yijun
+    family-names: Zhang
+repository-code: 'https://github.com/ddgithubb/planar-pose-estimation'
+abstract: >-
+  In this paper, we aim to explore the problem of estimating
+  poses of planar objects using IPPE (Infinitesimal
+  Plane-based Pose Estimation \cite{IPPE}) which is a
+  completely analytical solution to the PnP
+  (Perspective-n-Point) problem. Specifically, we want to
+  find the strong points and limitation of IPPE by comparing
+  to other well-established PnP algorithms of iterative and
+  EPnP\cite{epnp} by measuring its performance in time and
+  Euclidean projection error in different noise-exhibiting
+  environments. Our main process of estimating poses of
+  planar objects is by matching features of a target image
+  with a base image (top-down view of the planar object) to
+  get point correspondences, then using a PnP algorithm to
+  estimate the pose of that object. We focus on specifically
+  noise of 2d to 3d point correspondences that exist in the
+  form of feature matching noise and inherent image noise.
+  We also explore actual application of pose estimation in
+  the form of pose estimation of objects in videos using
+  initial features and Lucas-Kanade to get point
+  correspondences.

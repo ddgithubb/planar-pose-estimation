@@ -48,7 +48,7 @@ class PoseEstimator:
             ransac_max_iterations: int = 1000,
             use_lucas_kanade: bool = False,
             verbose: bool = False,
-            show_frame_pose: bool = False, 
+            show_frame_pose: bool = True, 
             write_output: bool = False, 
             out_folder: str = 'out',
             analytics: Analytics = None,

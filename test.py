@@ -25,7 +25,7 @@ pnp = IPPE()
 
 pose_estimator = PoseEstimator(camera_config, feature_matcher, pnp)
 
-analytics = Analytics()
+analytics = Analytics("")
 
 pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_far.mp4", use_ransac=False, verbose=True, write_output=True, analytics=analytics)
 # pose_estimator.video_estimate_pose("images/base_box.jpg", "videos/video_box_far.mp4", use_lucas_kanade=True, verbose=True, write_output=True, analytics=analytics)
